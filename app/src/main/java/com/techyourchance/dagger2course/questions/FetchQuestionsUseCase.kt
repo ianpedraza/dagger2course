@@ -2,6 +2,7 @@ package com.techyourchance.dagger2course.questions
 
 import com.techyourchance.dagger2course.Constants
 import com.techyourchance.dagger2course.networking.StackoverflowApi
+import com.techyourchance.dagger2course.questions.common.DataState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -35,10 +36,5 @@ class FetchQuestionsUseCase {
                 }
             }
         }
-    }
-
-    sealed class DataState<out R> {
-        data class Success<out T>(val data: T) : DataState<T>()
-        object Failure : DataState<Nothing>()
     }
 }

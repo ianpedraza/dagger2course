@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
 import com.techyourchance.dagger2course.questions.Question
+import com.techyourchance.dagger2course.questions.common.DataState
 import com.techyourchance.dagger2course.screens.common.dialogs.ServerErrorDialogFragment
 import com.techyourchance.dagger2course.screens.questiondetails.QuestionDetailsActivity
 import kotlinx.coroutines.CoroutineScope
@@ -57,14 +58,12 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListViewMvc.Listener
         coroutineScope.launch {
             viewMvc.showProgressIndication()
             try {
-                val result = fetchQuestionsUseCase.fetchLatestQuestion()
-
-                when (result) {
-                    FetchQuestionsUseCase.DataState.Failure -> onFetchFailed()
-                    is FetchQuestionsUseCase.DataState.Success -> {
+                when (val result = fetchQuestionsUseCase.fetchLatestQuestion()) {
+                    is DataState.Success -> {
                         viewMvc.bindQuestions(result.data)
                         isDataLoaded = true
                     }
+                    DataState.Failure -> onFetchFailed()
                 }
             } finally {
                 viewMvc.hideProgressIndication()
