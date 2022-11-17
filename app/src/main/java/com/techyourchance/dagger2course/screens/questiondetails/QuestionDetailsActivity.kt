@@ -67,7 +67,7 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsMvc.Listener
                 val response = stackoverflowApi.questionDetails(questionId)
                 if (response.isSuccessful && response.body() != null) {
                     val questionBody = response.body()!!.question.body
-                    viewMvc.setQuestionBody(questionBody)
+                    viewMvc.bindQuestionBody(questionBody)
                 } else {
                     onFetchFailed()
                 }
