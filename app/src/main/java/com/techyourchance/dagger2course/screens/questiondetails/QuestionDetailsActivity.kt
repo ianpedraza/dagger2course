@@ -3,10 +3,10 @@ package com.techyourchance.dagger2course.screens.questiondetails
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
 import com.techyourchance.dagger2course.questions.FetchQuestionDetailsUseCase
 import com.techyourchance.dagger2course.questions.common.DataState
+import com.techyourchance.dagger2course.screens.common.ScreensNavigator
+import com.techyourchance.dagger2course.screens.common.activities.BaseActivity
 import com.techyourchance.dagger2course.screens.common.dialogs.DialogsNavigator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,29 +14,28 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 
-class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsMvc.Listener {
+class QuestionDetailsActivity : BaseActivity(), QuestionDetailsMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private lateinit var questionId: String
+    private lateinit var fetchQuestionDetailsUseCase: FetchQuestionDetailsUseCase
+    private lateinit var dialogsNavigator: DialogsNavigator
+    private lateinit var screensNavigator: ScreensNavigator
 
     private lateinit var viewMvc: QuestionDetailsMvc
 
-    private lateinit var fetchQuestionDetailsUseCase: FetchQuestionDetailsUseCase
-
-    private lateinit var dialogsNavigator: DialogsNavigator
+    private lateinit var questionId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewMvc = QuestionDetailsMvc(LayoutInflater.from(this), null)
+        viewMvc = compositionRoot.viewMvcFactory.newQuestionDetailsMvc(null)
         setContentView(viewMvc.rootView)
 
-        // retrieve question ID passed from outside
+        fetchQuestionDetailsUseCase = compositionRoot.fetchQuestionDetailsUseCase
+        dialogsNavigator = compositionRoot.dialogsNavigator
+        screensNavigator = compositionRoot.screensNavigator
+
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
-
-        fetchQuestionDetailsUseCase = FetchQuestionDetailsUseCase()
-
-        dialogsNavigator = DialogsNavigator(supportFragmentManager)
     }
 
     override fun onStart() {
@@ -52,7 +51,7 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsMvc.Listener
     }
 
     override fun onBackClicked() {
-        onBackPressed()
+        screensNavigator.navigateBack()
     }
 
     private fun fetchQuestionDetails() {
