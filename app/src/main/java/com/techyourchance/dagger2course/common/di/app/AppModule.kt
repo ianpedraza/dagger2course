@@ -11,20 +11,22 @@ import retrofit2.create
 
 @Module
 class AppModule(private val application: Application) {
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
+
+    @Provides
+    fun providesApplication(): Application = application
+
+    @AppScope
+    @Provides
+    fun providesRetrofit(): Retrofit {
+        return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    private val stackoverflowApi: StackoverflowApi by lazy {
-        retrofit.create(StackoverflowApi::class.java)
-    }
-
+    @AppScope
     @Provides
-    fun providesApplication(): Application = application
-
-    @Provides
-    fun providesStackoverflowApi(): StackoverflowApi = stackoverflowApi
+    fun providesStackoverflowApi(
+        retrofit: Retrofit
+    ): StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
 }
