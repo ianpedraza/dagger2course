@@ -1,5 +1,6 @@
 package com.techyourchance.dagger2course.common.di
 
+import com.techyourchance.dagger2course.common.di.presentation.PresentationComponent
 import com.techyourchance.dagger2course.questions.FetchQuestionDetailsUseCase
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
@@ -41,19 +42,19 @@ class Injector(private val component: PresentationComponent) {
     private fun getServiceForClass(type: Class<*>): Any {
         when (type) {
             DialogsNavigator::class.java -> {
-                return component.dialogsNavigator()
+                return component.providesDialogsNavigator()
             }
             ScreensNavigator::class.java -> {
-                return component.screensNavigator()
+                return component.providesScreensNavigator()
             }
             FetchQuestionsUseCase::class.java -> {
-                return component.fetchQuestionsUseCase()
+                return component.providesFetchQuestionsUseCase()
             }
             FetchQuestionDetailsUseCase::class.java -> {
-                return component.fetchQuestionDetailsUseCase()
+                return component.providesFetchQuestionDetailsUseCase()
             }
             ViewMvcFactory::class.java -> {
-                return component.viewMvcFactory()
+                return component.providesViewMvcFactory()
             }
             else -> {
                 return Exception("unsupported service type: $type")

@@ -1,4 +1,4 @@
-package com.techyourchance.dagger2course.common.di
+package com.techyourchance.dagger2course.common.di.presentation
 
 import com.techyourchance.dagger2course.questions.FetchQuestionDetailsUseCase
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
@@ -9,9 +9,9 @@ import dagger.Component
 
 @Component(modules = [PresentationModule::class])
 interface PresentationComponent {
-    fun screensNavigator(): ScreensNavigator
-    fun viewMvcFactory(): ViewMvcFactory
-    fun dialogsNavigator(): DialogsNavigator
-    fun fetchQuestionsUseCase(): FetchQuestionsUseCase
-    fun fetchQuestionDetailsUseCase(): FetchQuestionDetailsUseCase
+    fun providesScreensNavigator(): ScreensNavigator
+    fun providesViewMvcFactory(): ViewMvcFactory
+    fun providesDialogsNavigator(): DialogsNavigator
+    fun providesFetchQuestionsUseCase(): FetchQuestionsUseCase
+    fun providesFetchQuestionDetailsUseCase(): FetchQuestionDetailsUseCase
 }

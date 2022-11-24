@@ -1,27 +1,33 @@
 package com.techyourchance.dagger2course.screens.common.activities
 
 import androidx.appcompat.app.AppCompatActivity
-import com.techyourchance.dagger2course.MyApplication
-import com.techyourchance.dagger2course.common.di.ActivityCompositionRoot
-import com.techyourchance.dagger2course.common.di.AppCompositionRoot
-import com.techyourchance.dagger2course.common.di.DaggerPresentationComponent
 import com.techyourchance.dagger2course.common.di.Injector
-import com.techyourchance.dagger2course.common.di.PresentationModule
+import com.techyourchance.dagger2course.common.di.activity.ActivityComponent
+import com.techyourchance.dagger2course.common.di.activity.ActivityModule
+import com.techyourchance.dagger2course.common.di.activity.DaggerActivityComponent
+import com.techyourchance.dagger2course.common.di.app.AppComponent
+import com.techyourchance.dagger2course.common.di.app.AppModule
+import com.techyourchance.dagger2course.common.di.app.DaggerAppComponent
+import com.techyourchance.dagger2course.common.di.presentation.DaggerPresentationComponent
+import com.techyourchance.dagger2course.common.di.presentation.PresentationComponent
+import com.techyourchance.dagger2course.common.di.presentation.PresentationModule
 
 open class BaseActivity : AppCompatActivity() {
-    private val appCompositionRoot: AppCompositionRoot get() = (application as MyApplication).appCompositionRoot
-
-    val activityCompositionRoot: ActivityCompositionRoot by lazy {
-        ActivityCompositionRoot(this, appCompositionRoot)
+    private val appComponent: AppComponent by lazy {
+        DaggerAppComponent.builder()
+            .appModule(AppModule(application))
+            .build()
     }
 
-    private val compositionRoot by lazy {
-        PresentationModule(activityCompositionRoot)
+    val activityComponent: ActivityComponent by lazy {
+        DaggerActivityComponent.builder()
+            .activityModule(ActivityModule(this, appComponent))
+            .build()
     }
 
-    private val presentationComponent by lazy {
+    private val presentationComponent: PresentationComponent by lazy {
         DaggerPresentationComponent.builder()
-            .presentationModule(PresentationModule(activityCompositionRoot))
+            .presentationModule(PresentationModule(activityComponent))
             .build()
     }
 

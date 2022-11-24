@@ -1,9 +1,10 @@
-package com.techyourchance.dagger2course.common.di
+package com.techyourchance.dagger2course.common.di.activity
 
 import android.app.Application
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import com.techyourchance.dagger2course.common.di.app.AppCompositionRoot
 import com.techyourchance.dagger2course.networking.StackoverflowApi
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 

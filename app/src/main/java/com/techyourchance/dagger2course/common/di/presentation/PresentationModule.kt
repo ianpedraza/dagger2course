@@ -1,7 +1,8 @@
-package com.techyourchance.dagger2course.common.di
+package com.techyourchance.dagger2course.common.di.presentation
 
 import android.view.LayoutInflater
 import androidx.fragment.app.FragmentManager
+import com.techyourchance.dagger2course.common.di.activity.ActivityComponent
 import com.techyourchance.dagger2course.networking.StackoverflowApi
 import com.techyourchance.dagger2course.questions.FetchQuestionDetailsUseCase
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
@@ -12,40 +13,40 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class PresentationModule(private val activityCompositionRoot: ActivityCompositionRoot) {
+class PresentationModule(private val activityComponent: ActivityComponent) {
 
     @Provides
-    fun layoutInflater(): LayoutInflater = activityCompositionRoot.layoutInflater
+    fun providesLayoutInflater(): LayoutInflater = activityComponent.providesLayoutInflater()
 
     @Provides
-    fun fragmentManager(): FragmentManager = activityCompositionRoot.fragmentManager
+    fun providesFragmentManager(): FragmentManager = activityComponent.providesFragmentManager()
 
     @Provides
-    fun stackoverflowApi(): StackoverflowApi = activityCompositionRoot.stackoverflowApi
+    fun providesStackoverflowApi(): StackoverflowApi = activityComponent.providesStackoverflowApi()
 
     @Provides
-    fun activity() = activityCompositionRoot.activity
+    fun providesActivity() = activityComponent.providesActivity()
 
     @Provides
-    fun screensNavigator(): ScreensNavigator = activityCompositionRoot.screensNavigator
+    fun providesScreensNavigator(): ScreensNavigator = activityComponent.providesScreensNavigator()
 
     @Provides
-    fun viewMvcFactory(
+    fun providesViewMvcFactory(
         layoutInflater: LayoutInflater
     ): ViewMvcFactory = ViewMvcFactory(layoutInflater)
 
     @Provides
-    fun dialogsNavigator(
+    fun providesDialogsNavigator(
         fragmentManager: FragmentManager
     ): DialogsNavigator = DialogsNavigator(fragmentManager)
 
     @Provides
-    fun fetchQuestionsUseCase(
+    fun providesFetchQuestionsUseCase(
         stackoverflowApi: StackoverflowApi
     ): FetchQuestionsUseCase = FetchQuestionsUseCase(stackoverflowApi)
 
     @Provides
-    fun fetchQuestionDetailsUseCase(
+    fun providesFetchQuestionDetailsUseCase(
         stackoverflowApi: StackoverflowApi
     ): FetchQuestionDetailsUseCase = FetchQuestionDetailsUseCase(stackoverflowApi)
 }
