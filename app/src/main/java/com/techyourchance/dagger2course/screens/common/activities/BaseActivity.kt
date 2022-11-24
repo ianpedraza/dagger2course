@@ -7,7 +7,6 @@ import com.techyourchance.dagger2course.common.di.app.AppComponent
 import com.techyourchance.dagger2course.common.di.app.AppModule
 import com.techyourchance.dagger2course.common.di.app.DaggerAppComponent
 import com.techyourchance.dagger2course.common.di.presentation.PresentationComponent
-import com.techyourchance.dagger2course.common.di.presentation.PresentationModule
 
 open class BaseActivity : AppCompatActivity() {
     private val appComponent: AppComponent by lazy {
@@ -21,7 +20,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     private val presentationComponent: PresentationComponent by lazy {
-        activityComponent.newPresentationComponent(PresentationModule())
+        activityComponent.newPresentationComponent()
     }
 
     protected val injector get() = presentationComponent
