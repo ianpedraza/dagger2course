@@ -5,8 +5,9 @@ import com.techyourchance.dagger2course.questions.common.DataState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class FetchQuestionsUseCase(private val stackoverflowApi: StackoverflowApi) {
+class FetchQuestionsUseCase @Inject constructor(private val stackoverflowApi: StackoverflowApi) {
 
     suspend fun fetchLatestQuestion(): DataState<List<Question>> {
         return withContext(Dispatchers.IO) {
