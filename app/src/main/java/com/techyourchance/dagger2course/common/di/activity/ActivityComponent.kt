@@ -1,22 +1,11 @@
 package com.techyourchance.dagger2course.common.di.activity
 
-import android.app.Application
-import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import com.techyourchance.dagger2course.common.di.app.AppComponent
-import com.techyourchance.dagger2course.networking.StackoverflowApi
-import com.techyourchance.dagger2course.screens.common.ScreensNavigator
-import dagger.Component
+import com.techyourchance.dagger2course.common.di.presentation.PresentationComponent
+import com.techyourchance.dagger2course.common.di.presentation.PresentationModule
+import dagger.Subcomponent
 
 @ActivityScope
-@Component(dependencies = [AppComponent::class], modules = [ActivityModule::class])
+@Subcomponent(modules = [ActivityModule::class])
 interface ActivityComponent {
-    fun providesApplication(): Application
-    fun providesStackoverflowApi(): StackoverflowApi
-
-    fun providesActivity(): AppCompatActivity
-    fun providesScreensNavigator(): ScreensNavigator
-    fun providesLayoutInflater(): LayoutInflater
-    fun providesFragmentManager(): FragmentManager
+    fun newPresentationComponent(presentationModule: PresentationModule): PresentationComponent
 }
