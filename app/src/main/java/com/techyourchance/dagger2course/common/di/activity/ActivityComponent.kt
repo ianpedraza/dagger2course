@@ -14,12 +14,6 @@ interface ActivityComponent {
     interface Builder {
         @BindsInstance
         fun activity(activity: AppCompatActivity): Builder
-
-        /*
-        The activityModule could be skipped, because remember:
-        Dagger knows how to build non-parameterized Module
-        */
-        fun activityModule(activityModule: ActivityModule): Builder
         fun build(): ActivityComponent
     }
 }

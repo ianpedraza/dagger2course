@@ -3,25 +3,30 @@ package com.techyourchance.dagger2course.common.di.activity
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import com.techyourchance.dagger2course.screens.common.DefaultScreensNavigator
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module
-object ActivityModule {
+abstract class ActivityModule {
+
     @ActivityScope
-    @Provides
-    fun providesScreensNavigator(
-        activity: AppCompatActivity
-    ): ScreensNavigator = ScreensNavigator(activity)
+    @Binds
+    abstract fun providesScreensNavigator(
+        screensNavigator: DefaultScreensNavigator
+    ): ScreensNavigator
 
-    @Provides
-    fun providesLayoutInflater(
-        activity: AppCompatActivity
-    ): LayoutInflater = LayoutInflater.from(activity)
+    companion object {
+        @Provides
+        fun providesLayoutInflater(
+            activity: AppCompatActivity
+        ): LayoutInflater = LayoutInflater.from(activity)
 
-    @Provides
-    fun providesFragmentManager(
-        activity: AppCompatActivity
-    ): FragmentManager = activity.supportFragmentManager
+        @Provides
+        fun providesFragmentManager(
+            activity: AppCompatActivity
+        ): FragmentManager = activity.supportFragmentManager
+    }
 }
