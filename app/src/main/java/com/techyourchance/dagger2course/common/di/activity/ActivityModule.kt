@@ -8,17 +8,20 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class ActivityModule(private val activity: AppCompatActivity) {
-    @Provides
-    fun providesActivity(): AppCompatActivity = activity
-
+object ActivityModule {
     @ActivityScope
     @Provides
-    fun screensNavigator(activity: AppCompatActivity): ScreensNavigator = ScreensNavigator(activity)
+    fun providesScreensNavigator(
+        activity: AppCompatActivity
+    ): ScreensNavigator = ScreensNavigator(activity)
 
     @Provides
-    fun providesLayoutInflater(): LayoutInflater = LayoutInflater.from(activity)
+    fun providesLayoutInflater(
+        activity: AppCompatActivity
+    ): LayoutInflater = LayoutInflater.from(activity)
 
     @Provides
-    fun providesFragmentManager(): FragmentManager = activity.supportFragmentManager
+    fun providesFragmentManager(
+        activity: AppCompatActivity
+    ): FragmentManager = activity.supportFragmentManager
 }

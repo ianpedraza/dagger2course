@@ -15,18 +15,20 @@ class AppModule(private val application: Application) {
     @Provides
     fun providesApplication(): Application = application
 
-    @AppScope
-    @Provides
-    fun providesRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+    companion object {
+        @AppScope
+        @Provides
+        fun providesRetrofit(): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
 
-    @AppScope
-    @Provides
-    fun providesStackoverflowApi(
-        retrofit: Retrofit
-    ): StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
+        @AppScope
+        @Provides
+        fun providesStackoverflowApi(
+            retrofit: Retrofit
+        ): StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
+    }
 }

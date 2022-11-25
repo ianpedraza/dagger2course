@@ -11,7 +11,15 @@ open class BaseActivity : AppCompatActivity() {
     private val appComponent: AppComponent get() = (application as MyApplication).appComponent
 
     val activityComponent: ActivityComponent by lazy {
-        appComponent.newActivityComponent(ActivityModule(this))
+        /*
+        The activityModule could be skipped, because remember:
+        Dagger knows how to build non-parameterized Module
+        */
+
+        appComponent.newActivityComponentBuilder()
+            .activity(this)
+            .activityModule(ActivityModule)
+            .build()
     }
 
     private val presentationComponent: PresentationComponent by lazy {
