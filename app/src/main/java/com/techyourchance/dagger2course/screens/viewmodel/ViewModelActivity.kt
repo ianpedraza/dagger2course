@@ -4,10 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.techyourchance.dagger2course.R
 import com.techyourchance.dagger2course.questions.Question
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
@@ -44,12 +41,8 @@ class ViewModelActivity : BaseActivity() {
     }
 
     private fun subscribeObservers() {
-        lifecycleScope.launchWhenStarted {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.questions.collect { questions ->
-                    doSomething(questions)
-                }
-            }
+        viewModel.questions.observe(this) { questions ->
+            doSomething(questions)
         }
     }
 
