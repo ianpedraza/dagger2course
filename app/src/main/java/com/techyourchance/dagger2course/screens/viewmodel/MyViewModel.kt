@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
-class MyViewModel(
+class MyViewModel @Inject constructor(
     private val fetchQuestionsUseCase: FetchQuestionsUseCase
 ) : ViewModel() {
 
@@ -33,10 +33,10 @@ class MyViewModel(
     }
 
     class MyViewModelFactory @Inject constructor(
-        private val fetchQuestionsUseCase: Provider<FetchQuestionsUseCase>
+        private val myViewModelProvider: Provider<MyViewModel>
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return MyViewModel(fetchQuestionsUseCase.get()) as T
+            return myViewModelProvider.get() as T
         }
     }
 }
