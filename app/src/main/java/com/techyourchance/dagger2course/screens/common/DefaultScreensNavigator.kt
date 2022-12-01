@@ -1,6 +1,7 @@
 package com.techyourchance.dagger2course.screens.common
 
 import androidx.appcompat.app.AppCompatActivity
+import com.techyourchance.dagger2course.screens.viewmodel.ViewModelActivity
 import com.techyourchance.dagger2course.screens.questiondetails.QuestionDetailsActivity
 import javax.inject.Inject
 
@@ -14,5 +15,9 @@ class DefaultScreensNavigator
 
     override fun toQuestionDetails(questionId: String) {
         QuestionDetailsActivity.start(activity, questionId)
+    }
+
+    override fun toViewModel() {
+        ViewModelActivity.start(activity)
     }
 }

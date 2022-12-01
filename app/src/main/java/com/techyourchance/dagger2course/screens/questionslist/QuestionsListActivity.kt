@@ -64,6 +64,10 @@ class QuestionsListActivity : BaseActivity(), QuestionsListViewMvc.Listener {
         screensNavigator.toQuestionDetails(clickedQuestion.id)
     }
 
+    override fun onViewModelClicked() {
+        screensNavigator.toViewModel()
+    }
+
     private fun fetchQuestions() {
         coroutineScope.launch {
             viewMvc.showProgressIndication()
