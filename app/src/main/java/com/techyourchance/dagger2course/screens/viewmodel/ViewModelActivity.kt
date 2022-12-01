@@ -4,12 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.techyourchance.dagger2course.R
 import com.techyourchance.dagger2course.questions.Question
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import com.techyourchance.dagger2course.screens.common.activities.BaseActivity
 import com.techyourchance.dagger2course.screens.common.toolbar.MyToolbar
+import com.techyourchance.dagger2course.screens.viewmodel.MyViewModel.*
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class ViewModelActivity : BaseActivity() {
@@ -17,6 +22,8 @@ class ViewModelActivity : BaseActivity() {
     @Inject
     lateinit var screensNavigator: ScreensNavigator
 
+    @Inject
+    lateinit var myViewModelFactory: MyViewModelFactory
     private lateinit var viewModel: MyViewModel
 
     private lateinit var toolbar: MyToolbar
@@ -32,16 +39,19 @@ class ViewModelActivity : BaseActivity() {
             screensNavigator.navigateBack()
         }
 
+        viewModel = ViewModelProvider(this, myViewModelFactory)[MyViewModel::class.java]
+
         subscribeObservers()
     }
 
     private fun subscribeObservers() {
-        viewModel.questions.observe(
-            this,
-            Observer { questions ->
-                doSomething(questions)
+        lifecycleScope.launchWhenStarted {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.questions.collect { questions ->
+                    doSomething(questions)
+                }
             }
-        )
+        }
     }
 
     private fun doSomething(questions: List<Question>) {
