@@ -54,7 +54,7 @@ class ViewModelActivity : BaseActivity() {
     }
 
     private fun doSomething(questions: List<Question>) {
-        Toast.makeText(this, "fetches ${questions.size} questions", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "fetched ${questions.size} questions", Toast.LENGTH_SHORT).show()
     }
 
     companion object {
