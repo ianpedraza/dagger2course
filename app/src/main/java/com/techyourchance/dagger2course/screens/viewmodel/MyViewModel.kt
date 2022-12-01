@@ -31,12 +31,4 @@ class MyViewModel @Inject constructor(
             }
         }
     }
-
-    class MyViewModelFactory @Inject constructor(
-        private val myViewModelProvider: Provider<MyViewModel>
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return myViewModelProvider.get() as T
-        }
-    }
 }

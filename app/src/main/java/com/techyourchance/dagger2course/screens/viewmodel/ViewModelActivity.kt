@@ -13,8 +13,7 @@ import com.techyourchance.dagger2course.questions.Question
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import com.techyourchance.dagger2course.screens.common.activities.BaseActivity
 import com.techyourchance.dagger2course.screens.common.toolbar.MyToolbar
-import com.techyourchance.dagger2course.screens.viewmodel.MyViewModel.*
-import kotlinx.coroutines.flow.collect
+import com.techyourchance.dagger2course.screens.common.viewmodels.ViewModelFactory
 import javax.inject.Inject
 
 class ViewModelActivity : BaseActivity() {
@@ -23,7 +22,7 @@ class ViewModelActivity : BaseActivity() {
     lateinit var screensNavigator: ScreensNavigator
 
     @Inject
-    lateinit var myViewModelFactory: MyViewModelFactory
+    lateinit var myViewModelFactory: ViewModelFactory
     private lateinit var viewModel: MyViewModel
 
     private lateinit var toolbar: MyToolbar
