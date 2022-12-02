@@ -9,6 +9,7 @@ import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import com.techyourchance.dagger2course.screens.common.activities.BaseActivity
 import com.techyourchance.dagger2course.screens.common.dialogs.DialogsNavigator
 import com.techyourchance.dagger2course.screens.common.viewsmvc.ViewMvcFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,6 +17,7 @@ import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class QuestionDetailsActivity : BaseActivity(), QuestionDetailsMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -37,7 +39,6 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsMvc.Listener {
     private lateinit var questionId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injector.inject(this)
         super.onCreate(savedInstanceState)
         viewMvc = viewMvcFactory.newQuestionDetailsMvc(null)
         setContentView(viewMvc.rootView)
