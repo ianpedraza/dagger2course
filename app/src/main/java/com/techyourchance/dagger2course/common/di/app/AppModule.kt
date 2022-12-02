@@ -1,24 +1,22 @@
 package com.techyourchance.dagger2course.common.di.app
 
-import android.app.Application
 import com.techyourchance.dagger2course.common.di.RetrofitQuestions
 import com.techyourchance.dagger2course.networking.StackoverflowApi
 import com.techyourchance.dagger2course.networking.UrlProvider
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Named
 
 @Module
-class AppModule(private val application: Application) {
-
-    @Provides
-    fun providesApplication(): Application = application
+@InstallIn(SingletonComponent::class)
+class AppModule {
 
     companion object {
-        @AppScope
+        @AppScoped
         @Provides
         @RetrofitQuestions
         fun providesRetrofit(urlProvider: UrlProvider): Retrofit {
@@ -28,7 +26,7 @@ class AppModule(private val application: Application) {
                 .build()
         }
 
-        @AppScope
+        @AppScoped
         @Provides
         @Named("retrofit2")
         fun providesRetrofit2(urlProvider: UrlProvider): Retrofit {
@@ -38,11 +36,11 @@ class AppModule(private val application: Application) {
                 .build()
         }
 
-        @AppScope
+        @AppScoped
         @Provides
         fun providesUrlProvider(): UrlProvider = UrlProvider()
 
-        @AppScope
+        @AppScoped
         @Provides
         fun providesStackoverflowApi(
             @RetrofitQuestions
