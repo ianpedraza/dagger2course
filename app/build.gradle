@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -33,6 +34,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -49,8 +54,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     // Dagger
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    // implementation "com.google.dagger:dagger:$dagger_version"
+    // kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.14.2'
@@ -58,8 +63,14 @@ dependencies {
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 
+    // Activity Coroutines Scope
     implementation 'androidx.activity:activity-ktx:1.6.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 
+    // SavedStateHandler
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1'
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$dagger_version"
+    kapt "com.google.dagger:hilt-compiler:$dagger_version"
 }
